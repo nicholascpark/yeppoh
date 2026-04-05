@@ -1,0 +1,7 @@
+# Pure reflex — no memory, no communication
+# Fastest training, useful for validating physics/reward
+brain:
+  use_memory: false
+  use_communication: false
+  use_drives: false
+  feature_dim: 128

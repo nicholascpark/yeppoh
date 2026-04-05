@@ -1,0 +1,7 @@
+# Jellyfish — bell contraction + trailing tentacles
+creature:
+  plan: jellyfish
+  params:
+    bell_radius: 0.25
+    n_tentacles: 6
+    tentacle_length: 0.4

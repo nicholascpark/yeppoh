@@ -1,0 +1,9 @@
+# Full cognitive architecture — memory + communication + drives
+# Slowest training, richest emergent behavior
+brain:
+  use_memory: true
+  use_communication: true
+  use_drives: true
+  feature_dim: 128
+  memory_dim: 64
+  message_dim: 16

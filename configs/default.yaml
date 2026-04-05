@@ -1,0 +1,61 @@
+# ═══ YEPPOH DEFAULT CONFIG ═══
+# Override any key via CLI: python scripts/train.py creature.plan=coral
+
+scene:
+  n_envs: 256
+  dt: 0.01
+  substeps: 2
+  max_steps: 1000
+  gpu: true
+  show_viewer: false
+
+creature:
+  plan: blob
+  n_creatures: 1
+  dynamic_agents: false
+  senses:
+    - proprioception
+    - echolocation
+    - touch
+  sense_params:
+    n_rays: 16
+    max_range: 5.0
+  params:
+    radius: 0.3
+    n_agents: 4
+
+brain:
+  feature_dim: 128
+  hidden_dim: 256
+  memory_dim: 64
+  message_dim: 16
+  use_memory: true
+  use_communication: true
+  use_drives: true
+
+reward:
+  locomotion: 1.0
+  survival: 0.5
+  coordination: 0.3
+
+training:
+  algorithm: mappo
+  timesteps: 500000
+  output_dir: runs/default
+  hyperparams:
+    lr: 0.0003
+    gamma: 0.99
+    clip_epsilon: 0.2
+    entropy_coef: 0.01
+    n_steps: 2048
+    batch_size: 64
+
+world:
+  pheromones: true
+  pheromone_channels: 3
+  pheromone_grid_size: 64
+  energy: true
+  stimuli:
+    lights:
+      - position: [0, 0, 5]
+        intensity: 1.0
