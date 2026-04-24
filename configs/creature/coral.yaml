@@ -1,0 +1,8 @@
+# Branching coral — growth + structure
+creature:
+  plan: coral
+  params:
+    stalk_height: 0.5
+    n_branches: 4
+    branch_length: 0.3
+    n_agents: 1  # per branch

@@ -1,0 +1,29 @@
+{
+  "drop_name": "Yeppoh: Emergent Phylum I",
+  "drop_id": "2026-phylum-i",
+  "launch_date_target": "2026-07-01",
+  "launch_date_actual": null,
+  "status": "planning",
+  "chain": "Base",
+  "contract_address": null,
+  "royalty_bps": 1000,
+  "royalty_standard": "ERC-2981",
+  "tiers": {
+    "video_edition": {
+      "standard": "ERC-1155",
+      "count": null,
+      "price_usd": null
+    },
+    "quiet_light": {
+      "standard": "ERC-721",
+      "count": 10,
+      "price_usd_range": [15000, 25000]
+    },
+    "frozen_form": {
+      "standard": "ERC-721",
+      "count": null,
+      "price_usd_range": [30000, 75000]
+    }
+  },
+  "creatures": []
+}

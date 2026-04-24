@@ -1,0 +1,11 @@
+# IPPO — Independent PPO (each agent learns alone)
+# Good baseline to compare against CTDE methods
+training:
+  algorithm: ippo
+  hyperparams:
+    lr: 0.0003
+    gamma: 0.99
+    clip_epsilon: 0.2
+    entropy_coef: 0.02  # more exploration needed without shared info
+    n_steps: 2048
+    batch_size: 64

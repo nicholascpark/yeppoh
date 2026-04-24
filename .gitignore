@@ -1,0 +1,41 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Training artifacts
+checkpoints/
+logs/
+output/
+runs/
+*.zip
+
+# Environment
+.env
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Claude Code local project instructions
+CLAUDE.md
+
+# Private strategy & operational docs (see THESIS.md §5)
+DIRECTION.md
+SCENE/
+PRIVATE/

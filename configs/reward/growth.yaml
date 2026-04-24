@@ -1,0 +1,5 @@
+# Growth — creature learns to grow interestingly
+reward:
+  growth: 1.0
+  survival: 0.5
+  coordination: 0.2

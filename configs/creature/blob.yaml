@@ -1,0 +1,6 @@
+# Simple soft blob — the "hello world" creature
+creature:
+  plan: blob
+  params:
+    radius: 0.3
+    n_agents: 4

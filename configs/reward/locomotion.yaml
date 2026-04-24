@@ -1,0 +1,5 @@
+# Locomotion — creature learns to move forward
+reward:
+  locomotion: 1.0
+  coordination: 0.3
+  survival: 0.5
