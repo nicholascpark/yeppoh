@@ -18,7 +18,7 @@ config = {
     "scene": {
         "n_envs": 4,
         "dt": 0.01,
-        "substeps": 2,
+        "substeps": 32,  # substep_dt = dt/substeps ≈ 3e-4, matches Genesis stability suggestion
         "max_steps": 500,
         "gpu": True,
         "show_viewer": False,

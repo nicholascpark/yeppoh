@@ -42,8 +42,8 @@ class Proprioception:
             return torch.zeros(1, self.obs_dim)
 
         # Particle positions and velocities
-        pos = self.entity.get_pos()  # (n_envs, n_particles, 3)
-        vel = self.entity.get_vel()  # (n_envs, n_particles, 3)
+        pos = self.entity.get_particles_pos()  # (n_envs, n_particles, 3)
+        vel = self.entity.get_particles_vel()  # (n_envs, n_particles, 3)
 
         n_envs = pos.shape[0]
 

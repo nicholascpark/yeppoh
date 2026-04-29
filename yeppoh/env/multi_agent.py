@@ -202,7 +202,8 @@ class YeppohEnv(ParallelEnv):
         # Sensory readings
         if agent_id in self.senses:
             reading = self.senses[agent_id].read()
-            parts.append(reading.flat.squeeze(0))
+            # reading.flat is (n_envs, total_dim); PettingZoo exposes env 0
+            parts.append(reading.flat[0])
 
         # Internal drives (placeholder — filled by brain module in training)
         drive_obs = torch.zeros(4)
@@ -223,7 +224,10 @@ class YeppohEnv(ParallelEnv):
         elif obs.shape[-1] > self._obs_dim:
             obs = obs[:self._obs_dim]
 
-        return obs.numpy().astype(np.float32)
+        obs_np = obs.detach().cpu().numpy().astype(np.float32)
+        # Defensive: if physics went unstable for one env, zero non-finite values
+        # so the training loop doesn't crash on NaN propagating through the brain.
+        return np.nan_to_num(obs_np, nan=0.0, posinf=0.0, neginf=0.0)
 
     def _build_reward_state(self) -> dict[str, Any]:
         """Collect state needed by reward functions."""

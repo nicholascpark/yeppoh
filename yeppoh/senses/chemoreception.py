@@ -41,7 +41,7 @@ class Chemoreception:
             return torch.zeros(n_envs, self.obs_dim)
 
         # Get creature position to sample the grid
-        pos = self.entity.get_pos()  # (n_envs, n_particles, 3)
+        pos = self.entity.get_particles_pos()  # (n_envs, n_particles, 3)
         centroid = pos.mean(dim=1)  # (n_envs, 3)
 
         # Sample pheromone grid at creature position

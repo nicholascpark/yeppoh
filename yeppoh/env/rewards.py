@@ -104,8 +104,9 @@ class SurvivalReward(RewardFunction):
 
     def compute(self, state: dict[str, Any]) -> torch.Tensor:
         energy = state.get("energy")
+        pos = state["positions"]  # (n_envs, n_agents, 3)
         if energy is None:
-            return torch.zeros(1, 1)
+            return torch.zeros(pos.shape[:2], device=pos.device, dtype=pos.dtype)
 
         # Reward for maintaining energy above critical threshold
         alive_bonus = (energy > 10.0).float() * 0.1
@@ -123,8 +124,9 @@ class CoordinationReward(RewardFunction):
 
     def compute(self, state: dict[str, Any]) -> torch.Tensor:
         vel = state.get("velocities")
+        pos = state["positions"]  # (n_envs, n_agents, 3)
         if vel is None:
-            return torch.zeros(1, 1)
+            return torch.zeros(pos.shape[:2], device=pos.device, dtype=pos.dtype)
 
         # Reward when all agents in a creature move in similar directions
         # (coherent movement vs. incoherent jitter)

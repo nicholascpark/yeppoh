@@ -117,7 +117,7 @@ class CreatureBody:
         cluster = self.get_cluster(agent_id)
         if cluster.entity is None:
             return torch.zeros(1, 1, 3)
-        positions = cluster.entity.get_pos()  # (n_envs, total_particles, 3)
+        positions = cluster.entity.get_particles_pos()  # (n_envs, total_particles, 3)
         return positions[:, cluster.particle_indices, :]
 
     def get_velocities(self, agent_id: str) -> torch.Tensor:
@@ -125,7 +125,7 @@ class CreatureBody:
         cluster = self.get_cluster(agent_id)
         if cluster.entity is None:
             return torch.zeros(1, 1, 3)
-        velocities = cluster.entity.get_vel()
+        velocities = cluster.entity.get_particles_vel()
         return velocities[:, cluster.particle_indices, :]
 
     def apply_motor_actions(self, actions: dict[str, torch.Tensor]) -> None:

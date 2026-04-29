@@ -59,7 +59,7 @@ class TouchSense:
         if self.entity is None:
             return torch.zeros(1, self.obs_dim)
 
-        vel = self.entity.get_vel()  # (n_envs, n_particles, 3)
+        vel = self.entity.get_particles_vel()  # (n_envs, n_particles, 3)
         n_envs = vel.shape[0]
 
         if self._prev_vel is None:
@@ -75,7 +75,7 @@ class TouchSense:
         batch_idx = torch.arange(n_envs, device=vel.device)
 
         contact_force = dv[batch_idx, max_idx]  # (n_envs, 3)
-        contact_point = self.entity.get_pos()[batch_idx, max_idx]  # (n_envs, 3)
+        contact_point = self.entity.get_particles_pos()[batch_idx, max_idx]  # (n_envs, 3)
 
         self._prev_vel = vel.clone()
 

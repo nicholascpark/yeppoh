@@ -119,7 +119,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--experiment", default="01_basic_blob")
+    parser.add_argument("--experiment", default="phylum1_sculpt")
     parser.add_argument("--timesteps", type=int, default=None)
     parser.add_argument("--creature", default=None)
     parser.add_argument("--list-results", action="store_true")
