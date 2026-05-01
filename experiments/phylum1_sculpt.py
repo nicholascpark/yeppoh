@@ -50,7 +50,8 @@ config = {
     "training": {
         "lr": 3e-4,
         "n_steps": 256,           # steps per iteration per env
-        "timesteps": 200_000,     # ≈ 25 iterations on this config; ~30 min on A100.
+        "timesteps": 50_000,      # First cloud run — ~15 min on A100, ~$1.
+                                  # Bump to 200_000+ once learning is verified.
         "epochs": 4,
         "minibatches": 4,
         "clip_eps": 0.2,
