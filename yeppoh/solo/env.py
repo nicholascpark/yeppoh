@@ -25,6 +25,29 @@ from ..body.actuators import ActuatorInterface
 from ..senses.proprioception import Proprioception
 
 
+# ── Headless rendering patch ─────────────────────────────────────────────
+# Genesis's `Visualizer.build()` unconditionally constructs an offscreen
+# pyrender.OffscreenRenderer, which needs a working PyOpenGL platform.
+# On cloud Linux containers (no display server, partial Mesa stack) this
+# crashes with `_p.PLATFORM.EGL = None`. Training rollouts don't render —
+# no viewer, no cameras, no recording — so when no viewer is requested we
+# replace the visualizer build with a no-op. Local Mac runs (with viewer
+# enabled for visualize_solo.py) hit the original code path unchanged.
+from genesis.vis.visualizer import Visualizer as _GsVisualizer
+_gs_visualizer_original_build = _GsVisualizer.build
+
+
+def _gs_visualizer_build_headless_safe(self):
+    if self._viewer is not None:
+        # Local path — original (works on macOS native GL)
+        return _gs_visualizer_original_build(self)
+    # Headless path — nothing to render, skip the entire build
+    return None
+
+
+_GsVisualizer.build = _gs_visualizer_build_headless_safe
+
+
 class SoloYeppohEnv:
     """Gym-style single-agent soft-body creature env."""
 
