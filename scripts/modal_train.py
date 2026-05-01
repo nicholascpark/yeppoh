@@ -24,7 +24,9 @@ import sys
 
 app = modal.App("yeppoh")
 
-# Docker image with all deps pre-installed
+# Docker image with all deps pre-installed.
+# GL drivers intentionally minimal — yeppoh/solo/env.py monkey-patches
+# Genesis's visualizer to skip offscreen rasterizer build on headless.
 image = (
     modal.Image.from_registry("pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel")
     .apt_install("git", "ffmpeg", "libgl1-mesa-glx", "libglib2.0-0")
@@ -115,27 +117,33 @@ def download_results(experiment: str = "01_basic_blob"):
 
 
 @app.local_entrypoint()
-def main():
-    import argparse
+def main(
+    experiment: str = "phylum1_sculpt",
+    timesteps: int = 0,
+    creature: str = "",
+    list_results: bool = False,
+):
+    """Modal CLI entrypoint.
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--experiment", default="phylum1_sculpt")
-    parser.add_argument("--timesteps", type=int, default=None)
-    parser.add_argument("--creature", default=None)
-    parser.add_argument("--list-results", action="store_true")
-    args = parser.parse_args()
+    Modal auto-maps function args to CLI flags. Do NOT use argparse here —
+    Modal will have already consumed `run scripts/modal_train.py` from sys.argv.
 
-    if args.list_results:
-        download_results.remote(args.experiment)
+    Examples:
+        modal run scripts/modal_train.py
+        modal run scripts/modal_train.py --experiment phylum1_sculpt
+        modal run scripts/modal_train.py --timesteps 500000
+        modal run scripts/modal_train.py --list-results
+    """
+    if list_results:
+        download_results.remote(experiment)
         return
 
-    overrides = {}
-    if args.timesteps:
-        overrides["training.timesteps"] = args.timesteps
-    if args.creature:
-        overrides["creature.plan"] = args.creature
+    overrides: dict | None = None
+    if timesteps or creature:
+        overrides = {}
+        if timesteps:
+            overrides["training.timesteps"] = timesteps
+        if creature:
+            overrides["creature.plan"] = creature
 
-    train.remote(
-        experiment=args.experiment,
-        overrides=overrides if overrides else None,
-    )
+    train.remote(experiment=experiment, overrides=overrides)
