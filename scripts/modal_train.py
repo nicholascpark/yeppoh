@@ -51,8 +51,10 @@ results_volume = modal.Volume.from_name("yeppoh-results", create_if_missing=True
 
 @app.function(
     image=image,
-    gpu="A100",
-    timeout=3600 * 4,  # 4 hour max
+    # A10G: 24GB VRAM, ~$1.10/hr, broad availability. Plenty for ~112K MPM
+    # particles. A100 was hitting capacity-wait queues on shared infra.
+    gpu="A10G",
+    timeout=3600 * 4,
     volumes={"/results": results_volume},
 )
 def train(experiment: str = "01_basic_blob", overrides: dict | None = None):
